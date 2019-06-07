@@ -4,7 +4,7 @@ import { BrowserRouter as Router,Switch, Route, Link } from "react-router-dom";
 import About from './pages/about/about';
 import News from './pages/news/news';
 import TopExchanges from './pages/topExchanges/topExchanges';
-import History from './pages/history/history';
+import Markets from './pages/markets/markets';
 import ForOFor from './pages/404';
 import './App.css';
 import Landing from'./pages/landing/Landing';
@@ -22,7 +22,7 @@ function App() {
       <Route path="/topics" component={Topics} />
       <Route path="/coins" component={Coins} />
       <Route path="/topExchanges" component ={TopExchanges}/>
-      <Route path="/history" component = {History}/>
+      <Route path="/markets" component = {Markets}/>
       <Route path="/landing" component = {Landing}/>
       <Route component={ForOFor}/>
       </Switch>
@@ -152,7 +152,7 @@ function Header() {
       </li>
 
       <li>
-        <Link to ="/history">History</Link>
+        <Link to ="/markets">Markets</Link>
       </li>
     </ul>
   );
