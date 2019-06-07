@@ -1,0 +1,11 @@
+.LandingContainer {
+  text-align: center;
+  width: 40%;
+  margin: 20px auto;
+}
+.InputContainer input {
+  font-size: 20px;
+  background: #f3f3f3;
+  border-radius: 5px;
+
+}

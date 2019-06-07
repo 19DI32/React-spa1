@@ -1,0 +1,15 @@
+.NewsArticle header {
+    font-weight: bold;
+    font-size: 24px;
+    margin:8px 12px;
+    padding: 6px;
+}
+.NewsArticle p {
+    width: max-content;
+    text-align: center;
+    margin: 10px auto;
+}
+.NewsArticle div {
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+}
