@@ -9,8 +9,11 @@
 .coin-container div {
     border: 1px solid black;
     margin: 10px;
-    width: 30%;
+    width: 20%;
+    height: max-content;
 }
 .coin-container img {
     width: 100%;
+    height: 15vh;
+    
 }

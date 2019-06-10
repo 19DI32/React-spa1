@@ -10,7 +10,6 @@ class Coins extends React.Component {
         return(
             <div className = "coins_container">
                 <Header text = "Coins header"/>
-                <Input />
                 <CoinList2 />
             </div>
         )
@@ -19,9 +18,9 @@ class Coins extends React.Component {
 
 const Input = (props)=> {
     return (
-        <div>
+        <div className = "Input-field">
             <span>Search</span>
-            <input placeholder ="Type to Search"/>
+            <input onChange = {props.handler} placeholder ="Type to Search"/>
         </div>
     )
 }
@@ -34,51 +33,6 @@ const Header = (props)=>{
     )
 }
 
-const CoinBTN = (props)=> {
-    return (
-        <div>
-            <span>{props.name}</span>
-            <img src = {props.src}/>
-        </div>
-    )
-}
-
-const CoinETH = (props)=> {
-    return (
-        <div>
-            <span>{props.name}</span>
-            <img src = {props.src}/>
-        </div>
-    )
-}
-
-const CoinXRP = (props)=> {
-    return (
-        <div>
-            <span>{props.name}</span>
-            <img src = {props.src}/>
-        </div>
-    )
-}
-const CoinLTS = (props)=> {
-    return (
-        <div>
-            <span>{props.name}</span>
-            <img src = {props.src}/>
-        </div>
-    )
-}
-
-const CoinsList = (props)=>{
-    return(
-        <div className = "coins__list">
-            <CoinBTN name = "BTN" src = "#"/>
-            <CoinLTS name = "LTS" src = "#"/>
-            <CoinETH name = "ETH" src = "#"/>
-            <CoinXRP name = "XRP" src = "#"/>
-        </div>
-    )
-}
 const CoinKard = (props)=> {
     return (
         <div>
@@ -95,15 +49,27 @@ class CoinList2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: Object.values(CoinsData.Data)
+            data: Object.values(CoinsData.Data).slice(0,20),
+            search:""
         }
+        this.filterCoins = this.filterCoins.bind(this);
+        this.onChange = this.onChange.bind(this);
+    }
+    filterCoins() {
+        return this.state.data.filter(coin=>coin.CoinName.toLowerCase().includes(this.state.search.toLowerCase()));
+    }
+    onChange(e) {
+        this.setState({search:e.target.value});
     }
 
     render() {
         return(
+            <>
+            <Input handler = {this.onChange}/>
             <div className = "coin-container">
-                {this.state.data.map((val)=><CoinKard text = {val.CoinName} href = {val.Url} src = {val.ImageUrl} key = {val.Id}/>)}
+                {this.filterCoins().map((val)=><CoinKard text = {val.CoinName} href = {val.Url} src = {val.ImageUrl} key = {val.Id}/>)}
             </div>
+            </>
         )
     }
 } 
