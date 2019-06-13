@@ -1,7 +1,7 @@
 import React from 'react';
 import './topExchanges.css';
 
-const TopExchanges = (props)=>{
+export const TopExchanges = (props)=>{
     return(
         <div>
             <h2>TopExchanges</h2>
@@ -10,7 +10,7 @@ const TopExchanges = (props)=>{
     )
 }
 
-class TopExchangesData extends React.Component {
+export class TopExchangesData extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,4 +56,4 @@ function ExchangesCard(props) {
         </div>
     )
 }
-export default TopExchanges;
+//export default TopExchanges;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TopExcganges from './topExchanges';
+import App from './App';
 
 test('Coins render correctly', () => {
-    const component = shallow(<TopExcganges />);
+    const component = shallow(<App/>);
     expect(component).toMatchSnapshot();
   });

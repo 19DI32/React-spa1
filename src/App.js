@@ -2,13 +2,13 @@ import React from 'react';
 //import logo from './logo.svg';
 import { BrowserRouter as Router,Switch, Route, Link } from "react-router-dom";
 import About from './pages/about/about';
-import News from './pages/news/news';
-import TopExchanges from './pages/topExchanges/topExchanges';
-import Markets from './pages/markets/markets';
+import {News} from './pages/news/news';
+import {TopExchanges} from './pages/topExchanges/topExchanges';
+import {Markets} from './pages/markets/markets';
 import ForOFor from './pages/404';
 import './App.css';
 import Landing from'./pages/landing/Landing';
-import Coins from './pages/coins/coins';
+import {Coins} from './pages/coins/coins';
 
 function App() {
   return (

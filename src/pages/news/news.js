@@ -1,7 +1,7 @@
 import React from 'react';
 import './news.css';
 
-const News = (props)=> {
+export const News = (props)=> {
     return (
         <div>
             <h2>Hot news</h2>
@@ -11,7 +11,7 @@ const News = (props)=> {
     )
 }
 
-const NewsArticle = (props)=>{
+export const NewsArticle = (props)=>{
      return (
          <div className = "NewsArticle">
              <header>{props.header}</header>
@@ -26,7 +26,7 @@ const NewsArticle = (props)=>{
      )
 }
 
-class NewsList extends React.Component {
+export class NewsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -68,4 +68,3 @@ class NewsList extends React.Component {
 
 
 
-export default News;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Markets = (props)=>{
+export const Markets = (props)=>{
     return(
         <div>
             <MarketsData/>
@@ -8,7 +8,7 @@ const Markets = (props)=>{
     )
 };
 
-class MarketsData extends React.Component {
+export class MarketsData extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -65,4 +65,4 @@ function MarketCard(props) {
 }
 
 
-export default Markets; 
+//export default Markets; 

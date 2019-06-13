@@ -2,7 +2,7 @@ import React from 'react';
 import './coins.css';
 import CoinsData from './coinsList.json';
 import PropTypes from 'prop-types';
-class Coins extends React.Component {
+export class Coins extends React.Component {
     constructor(props) {
         super(props); 
     }
@@ -16,7 +16,7 @@ class Coins extends React.Component {
     }
 }
 
-const Input = (props)=> {
+export const Input = (props)=> {
     return (
         <div className = "Input-field">
             <span>Search</span>
@@ -45,7 +45,7 @@ const CoinKard = (props)=> {
     )
 }
 
-class CoinList2 extends React.Component {
+export class CoinList2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -65,7 +65,10 @@ class CoinList2 extends React.Component {
     render() {
         return(
             <>
-            <Input handler = {this.onChange}/>
+           <Input handler = {this.onChange}/>
+           
+           {//<input onChange = {this.onChange} placeholder ="Type to Search"/>
+           }
             <div className = "coin-container">
                 {this.filterCoins().map((val)=><CoinKard text = {val.CoinName} href = {val.Url} src = {val.ImageUrl} key = {val.Id}/>)}
             </div>
@@ -76,9 +79,9 @@ class CoinList2 extends React.Component {
 
 CoinKard.propTypes = {
     text: PropTypes.string.isRequired,
-    key: PropTypes.string.isRequired,
+    //key: PropTypes.string.isRequired,
     href: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired
 }
 
-export default Coins;
+//export default Coins;
