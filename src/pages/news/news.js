@@ -1,6 +1,6 @@
 import React from 'react';
 import './news.css';
-
+import checkNews from '../../hok/withCheckNews';
 export const News = (props)=> {
     return (
         <div>
@@ -46,6 +46,9 @@ export class NewsList extends React.Component {
             this.setState({data: {}, isFetching: false, error: e });
           })
     };
+    componentDidUpdate() {
+        
+    }
     render() {
         if(this.state.isFetching) {
             return (<div>Loading ...</div>)

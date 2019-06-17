@@ -1,7 +1,9 @@
 import React from 'react';
 import './coins.css';
-import CoinsData from './coinsList.json';
+import logProps from '../../hok/withLogProps';
+//import CoinsData from './coinsList.json';
 import PropTypes from 'prop-types';
+import CoinKard from "./coinCard";
 export class Coins extends React.Component {
     constructor(props) {
         super(props); 
@@ -33,27 +35,22 @@ const Header = (props)=>{
     )
 }
 
-const CoinKard = (props)=> {
-    return (
-        <div>
-            <p>{props.text}
-            </p>
-            <p>
-            <a href= {"https://www.cryptocompare.com"+ props.href}><img src ={"https://www.cryptocompare.com/"+ props.src} /> </a>
-            </p>        
-        </div>
-    )
-}
+
 
 export class CoinList2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: Object.values(CoinsData.Data).slice(0,20),
-            search:""
+            data: [],
+            search:"",
+            isFetching:true
         }
         this.filterCoins = this.filterCoins.bind(this);
         this.onChange = this.onChange.bind(this);
+    }
+    componentDidMount() {
+        fetch("https://min-api.cryptocompare.com/data/all/coinlist").then(data=>data.json()).then(data=>this.setState({data : Object.values(data.Data).slice(0,20),
+        isFetching: false}));
     }
     filterCoins() {
         return this.state.data.filter(coin=>coin.CoinName.toLowerCase().includes(this.state.search.toLowerCase()));
@@ -63,12 +60,13 @@ export class CoinList2 extends React.Component {
     }
 
     render() {
+        if(this.state.isFetching) {
+            return (<div>Loading ...</div>)
+        }
         return(
             <>
            <Input handler = {this.onChange}/>
-           
-           {//<input onChange = {this.onChange} placeholder ="Type to Search"/>
-           }
+
             <div className = "coin-container">
                 {this.filterCoins().map((val)=><CoinKard text = {val.CoinName} href = {val.Url} src = {val.ImageUrl} key = {val.Id}/>)}
             </div>

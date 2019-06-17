@@ -49,10 +49,8 @@ class ConvertElements extends React.Component {
     this.setState({
       submit: val
     });
-    let url = 'https://min-api.cryptocompare.com/data/price?fsym='+val+'&tsyms='+val2+'&api_key=972fe7d5f9e7b1aa115f9972b921eaf0635a9f375dfb4c1f864c5b9695a80422';
-    fetch(url).then(res=>res.json()).then(d=>this.setState({
-      data:d
-    }));
+    let url = 'https://min-api.cryptocompare.com/data/price?fsym='+val+'&tsyms='+val2;
+    fetch(url).then(res=>res.json()).then(d=>this.setState({data:d}));
     //console.log(this.state.data);
   };
   onChangeCRP(e) {
@@ -65,7 +63,7 @@ class ConvertElements extends React.Component {
   return(
     <div>
       <select className = "ApiCall" onChange={this.onChangeCRP}>
-        <option value = "BTN">BTN</option>
+        <option value = "BTC">BTC</option>
         <option value = "ETH">ETH</option>
         <option value = "XRP">XRP</option>
         <option value = "LTC">LTC</option>
