@@ -1,5 +1,5 @@
 import React from 'react';
-import stylyshInput from '../../hok/stylyshInput';
+import stylyshInput from '../../HOC/stylyshInput';
 
 // export const InputMark = (props)=> {
 //     return (

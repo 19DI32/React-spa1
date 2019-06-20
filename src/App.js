@@ -6,11 +6,32 @@ import {News} from './pages/news/news';
 import {TopExchanges} from './pages/topExchanges/topExchanges';
 import {Markets} from './pages/markets/markets';
 import ForOFor from './pages/404';
+import CoinCard from './components/CoinCard';
 import './App.css';
 import Landing from'./pages/landing/Landing';
-import {Coins} from './pages/coins/coins';
+import Coins from './pages/coins/Coins';
+import { Line, Bar } from 'react-chartjs-2';
 
-function App() {
+class App extends React.Component {
+
+  state = {
+    coinsList: [],
+  };
+
+  filterListById = (list, id) => (
+    list.find(coin => coin.Id === id)
+  );
+
+  componentDidMount() {
+    fetch('https://min-api.cryptocompare.com/data/all/coinlist')
+      .then(responce => responce.json())
+      .then(responce => this.setState({ coinsList: Object.keys(responce.Data).slice(0, 10).map(key => responce.Data[key]) }))
+      .catch(err => alert(err));
+  }
+
+
+  render() {
+    const { coinsList } = this.state;
   return (
     <Router>
     <div>
@@ -20,15 +41,22 @@ function App() {
       <Route path="/about" component={About} />
       <Route path="/news" component={News}/>
       <Route path="/topics" component={Topics} />
-      <Route path="/coins" component={Coins} />
+      <Route exact path="/coins" component={props => <Coins {...props} coinsList={coinsList} />} />
       <Route path="/topExchanges" component ={TopExchanges}/>
       <Route path="/markets" component = {Markets}/>
       <Route path="/landing" component = {Landing}/>
+      <Route
+              path="/coins/:id"
+              component={props => (
+                <CoinCard {...props} coin={this.filterListById(coinsList, props.match.params.id)} />
+              )}
+            />
       <Route component={ForOFor}/>
       </Switch>
     </div>
   </Router>
   );
+}
 }
 class ConvertElements extends React.Component {
   constructor(props){
@@ -36,7 +64,10 @@ class ConvertElements extends React.Component {
     this.state ={
       val:"",
       submit:"",
-      data:""
+      data:{},
+      isFetching:true,
+      chartData:[],
+      chartOptions:[]
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeCRP = this.onChangeCRP.bind(this);
@@ -49,9 +80,36 @@ class ConvertElements extends React.Component {
     this.setState({
       submit: val
     });
-    let url = 'https://min-api.cryptocompare.com/data/price?fsym='+val+'&tsyms='+val2;
-    fetch(url).then(res=>res.json()).then(d=>this.setState({data:d}));
-    //console.log(this.state.data);
+    let url = 'https://min-api.cryptocompare.com/data/pricemultifull?fsyms='+val+'&tsyms='+val2;
+    fetch("https://min-api.cryptocompare.com/data/histohour?fsym="+val+"&tsym="+val2+"&limit=10").then(data=>data.json()).then((data)=>{
+      let chartOptions = {
+        legend: {
+          display: true,
+          position: 'top',
+          labels: {
+            boxWidth: 80,
+            //fontColor: 'black'
+          }
+        }
+      };
+      this.setState({chartOptions:chartOptions});
+    
+    let arr = data.Data;
+    let chartData = {
+        labels:arr.map(elem=>{let date= new Date(elem.time);return date.getHours()}),
+        datasets:[{
+            fill:false,
+            data:arr.map(elem=>elem.close),
+            backgroundColor:"red",
+            borderColor:"orange",
+        }]
+        
+    };
+    //console.log(chartData);
+    this.setState({isFetching:false,chartData:chartData});
+})
+    fetch(url).then(res=>res.json()).then(d=>this.setState({data:d.DISPLAY[val][val2]}));
+    console.log(this.state.data);
   };
   onChangeCRP(e) {
     //console.log(e.target.value);
@@ -78,11 +136,30 @@ class ConvertElements extends React.Component {
 
       <button onClick = {this.onSubmit}>Submit</button>
       <div>
-        {Object.keys(this.state.data).map((key)=><p>{key+':'+this.state.data[key]}</p>)}
+       
       </div>
+      {!this.state.isFetching && 
+      <div>
+        <ExchangeCard valName = {this.state.data.FROMSYMBOL} price = {this.state.data.PRICE} market = {this.state.data.MARKET} openDay = {this.state.data.OPENDAY} highDay = {this.state.data.HIGHDAY}lowDay = {this.state.data.LOWDAY} ChangeFor24H = {this.state.data.CHANGEPCT24HOUR}/>
+        <Line
+    data={this.state.chartData}
+    options={this.state.chartOptions}/>
+      </div>}
     </div>
   )
 }
+}
+function ExchangeCard(props) {
+    return(
+      <div className = "CurrensyCrad">
+        <p>{props.valName}: {props.price}</p>
+        <p>Market: {props.market}</p>
+        <p>Open day: {props.openDay}</p>
+        <p>High in  day: {props.highDay}</p>
+        <p>Low in day: {props.lowDay}</p>
+        <p>Change for 24 hour: {props.ChangeFor24H}</p>
+      </div>
+    )
 }
 
 function Home() {
@@ -91,10 +168,12 @@ function Home() {
   <h2>Home</h2>
   <div className = "Container">
     <ConvertElements/>
+    
 
   </div>
   </>);
 }
+
 
 function Topic({ match }) {
   return <h3>Requested Param: {match.params.id}</h3>;
@@ -126,6 +205,7 @@ function Topics({ match }) {
 
 function Header() {
   return (
+    <>
     <ul className="navbar">
       <li>
         <Link to="/">Home</Link>
@@ -153,6 +233,9 @@ function Header() {
         <Link to ="/markets">Markets</Link>
       </li>
     </ul>
+    </>
+
+
   );
 }
 //import './App.css';

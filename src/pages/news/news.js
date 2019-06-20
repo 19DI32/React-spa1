@@ -1,7 +1,7 @@
 import React from 'react';
 import './news.css';
-import checkNews from '../../hok/withCheckNews';
-import NewsList from './newsComponents';
+import checkNews from '../../HOC/withCheckNews';
+import {NewsList} from './newsComponents';
 export const News = (props)=> {
     return (
         <div>
