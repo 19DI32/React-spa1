@@ -9,7 +9,7 @@ import ForOFor from './pages/404';
 import CoinCard from './components/CoinCard';
 import './App.css';
 import Landing from'./pages/landing/Landing';
-import Coins from './pages/coins/Coins';
+import CoinsComponent from './pages/coins/Coins';
 import { Line, Bar } from 'react-chartjs-2';
 
 class App extends React.Component {
@@ -41,7 +41,7 @@ class App extends React.Component {
       <Route path="/about" component={About} />
       <Route path="/news" component={News}/>
       <Route path="/topics" component={Topics} />
-      <Route exact path="/coins" component={props => <Coins {...props} coinsList={coinsList} />} />
+      <Route exact path="/coins" component={props => <CoinsComponent {...props} coinsList={coinsList} />} />
       <Route path="/topExchanges" component ={TopExchanges}/>
       <Route path="/markets" component = {Markets}/>
       <Route path="/landing" component = {Landing}/>
